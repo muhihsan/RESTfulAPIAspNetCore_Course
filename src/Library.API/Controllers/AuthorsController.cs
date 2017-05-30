@@ -46,6 +46,7 @@ namespace Library.API.Controllers
 
             var authorEntity = Mapper.Map<Author>(author);
             _libraryRepository.AddAuthor(authorEntity);
+
             if (!_libraryRepository.Save()) throw new Exception("Creating an author failed on save.");
 
             var authorToReturn = Mapper.Map<AuthorDto>(authorEntity);
