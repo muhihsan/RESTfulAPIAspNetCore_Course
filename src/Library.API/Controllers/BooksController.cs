@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Library.API.Entities;
+using Library.API.Helpers;
 using Library.API.Models;
 using Library.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
@@ -47,6 +48,10 @@ namespace Library.API.Controllers
         public IActionResult CreateBookForAuthor(Guid authorId, [FromBody] BookForCreationDto book)
         {
             if (book == null) return BadRequest();
+
+            if (book.Description == book.Title) ModelState.AddModelError(nameof(BookForCreationDto), "The provided description should be different from the title.");
+
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             if (!_libraryRepository.AuthorExists(authorId)) return NotFound();
 
