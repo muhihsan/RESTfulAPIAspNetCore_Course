@@ -34,7 +34,8 @@ namespace Library.API.Controllers
         public IActionResult GetAuthor(Guid id)
         {
             var authorFromRepo = _libraryRepository.GetAuthor(id);
-            if (authorFromRepo == null) return NotFound();
+            if (authorFromRepo == null)
+                return NotFound();
 
             var author = Mapper.Map<AuthorDto>(authorFromRepo);
             return Ok(author);
@@ -43,12 +44,14 @@ namespace Library.API.Controllers
         [HttpPost]
         public IActionResult CreateAuthor([FromBody] AuthorForCreationDto author)
         {
-            if (author == null) return BadRequest();
+            if (author == null)
+                return BadRequest();
 
             var authorEntity = Mapper.Map<Author>(author);
             _libraryRepository.AddAuthor(authorEntity);
 
-            if (!_libraryRepository.Save()) throw new Exception("Creating an author failed on save.");
+            if (!_libraryRepository.Save())
+                throw new Exception("Creating an author failed on save.");
 
             var authorToReturn = Mapper.Map<AuthorDto>(authorEntity);
             return CreatedAtRoute("GetAuthor", new { id = authorToReturn.Id }, authorToReturn);
@@ -58,10 +61,12 @@ namespace Library.API.Controllers
         public IActionResult DeleteAuthor(Guid id)
         {
             var authorFromRepo = _libraryRepository.GetAuthor(id);
-            if (authorFromRepo == null) return NotFound();
+            if (authorFromRepo == null)
+                return NotFound();
 
             _libraryRepository.DeleteAuthor(authorFromRepo);
-            if (!_libraryRepository.Save()) throw new Exception($"Deleting author {id} failed on save.");
+            if (!_libraryRepository.Save())
+                throw new Exception($"Deleting author {id} failed on save.");
 
             return NoContent();
         }
@@ -69,7 +74,8 @@ namespace Library.API.Controllers
         [HttpPost("{id}")]
         public IActionResult BlockAuthorCreation(Guid id)
         {
-            if (_libraryRepository.AuthorExists(id)) return new StatusCodeResult(StatusCodes.Status409Conflict);
+            if (_libraryRepository.AuthorExists(id))
+                return new StatusCodeResult(StatusCodes.Status409Conflict);
 
             return NotFound();
         }

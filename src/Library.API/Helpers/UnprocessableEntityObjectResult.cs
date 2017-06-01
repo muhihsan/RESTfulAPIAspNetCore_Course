@@ -12,7 +12,8 @@ namespace Library.API.Helpers
         public UnprocessableEntityObjectResult(ModelStateDictionary modelState) 
             : base(new SerializableError(modelState))
         {
-            if (modelState == null) throw new ArgumentNullException(nameof(modelState));
+            if (modelState == null)
+                throw new ArgumentNullException(nameof(modelState));
 
             StatusCode = 422;
         }
