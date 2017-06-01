@@ -43,7 +43,7 @@ namespace Library.API.Controllers
         [HttpPost]
         public IActionResult CreateAuthor([FromBody] AuthorForCreationDto author)
         {
-            if (author == null) return NotFound();
+            if (author == null) return BadRequest();
 
             var authorEntity = Mapper.Map<Author>(author);
             _libraryRepository.AddAuthor(authorEntity);
