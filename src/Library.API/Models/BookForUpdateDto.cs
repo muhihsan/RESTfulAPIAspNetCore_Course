@@ -9,6 +9,10 @@ namespace Library.API.Models
     public class BookForUpdateDto : BookForManipulationDto
     {
         [Required(ErrorMessage = "You should fill out description.")]
-        public override string Description { get => base.Description; set => base.Description = value; }
+        public override string Description
+        {
+            get => base.Description;
+            set => base.Description = value;
+        }
     }
 }
