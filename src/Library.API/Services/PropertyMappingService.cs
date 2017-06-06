@@ -3,7 +3,6 @@ using Library.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Library.API.Services
 {
@@ -18,16 +17,16 @@ namespace Library.API.Services
                 { "Name", new PropertyMappingValue(new List<string>() {"FirstName", "LastName"}) }
             };
 
-        private IList<IPropertyMapping> propertyMappings = new List<IPropertyMapping>();
+        private IList<IPropertyMapping> _propertyMappings = new List<IPropertyMapping>();
 
         public PropertyMappingService()
         {
-            propertyMappings.Add(new PropertyMapping<AuthorDto, Author>(_authorPropertyMapping));
+            _propertyMappings.Add(new PropertyMapping<AuthorDto, Author>(_authorPropertyMapping));
         }
 
         public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>()
         {
-            var matchingMapping = propertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
+            var matchingMapping = _propertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
 
             if (matchingMapping.Count() == 1)
                 return matchingMapping.First()._mappingDictionary;
